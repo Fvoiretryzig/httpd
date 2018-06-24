@@ -174,7 +174,7 @@ void *request_parse(void* arg)
 	int line_len = 0;
 	int ptr1 = 0, ptr2 = 0;
 	//struct stat buffer;
-	
+	printf("in request_parse: client:%d", client);
 	line_len = read_line(client, buf, sizeof(buf));
 	printf("buf:%s\n", buf);
 	while(!isspace(buf[ptr1]) && (ptr1<line_len-1)){
