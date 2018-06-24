@@ -160,12 +160,12 @@ void *request_parse(int client)
 		url[ptr2++] = buf[ptr1++];
 	}
 	url[ptr2] = '\0';
-	printf("url:%s\n", url);
 	strcat(dir_name, url);
 	strcpy(file_path, dir_name);
 	if(file_path[strlen(file_path)-1] == '/'){
 		strcat(file_path, "index.html");
 	}
+	printf("file_path:%s\n", file_path);
 	make_response(client, file_path);
 	close(client);
 	//return;
