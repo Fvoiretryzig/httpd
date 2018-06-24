@@ -209,13 +209,14 @@ char *my_strstr(char *dest,char *src)
 }
 void parse_path(char* path, char* new_path)
 {
-	int ptr = 0;
+	int ptr = -1;
 	char* temp;
 	
 	strcpy(new_path, path);
 	
 	temp = strstr(path, "../");
 	while(temp){
+		printf("haha\n")
 		int slant_pos = -1;
 		ptr = temp - path;
 		for(int i = 0; i<ptr; i++){
@@ -239,7 +240,10 @@ void parse_path(char* path, char* new_path)
 			ptr = i;
 		}
 	}
-	new_path[ptr] = '\0'; path[ptr] = '\0';	
+	if(ptr >= 0){
+		new_path[ptr] = '\0'; 
+		path[ptr] = '\0';	
+	}
 	temp = my_strstr(path, "./");
 	while(temp){
 		ptr = temp - path;
@@ -255,8 +259,10 @@ void parse_path(char* path, char* new_path)
 			ptr = i;
 		}
 	}
-	new_path[ptr] = '\0'; path[ptr] = '\0';
-
+	if(ptr>0){
+		new_path[ptr] = '\0'; 
+		path[ptr] = '\0';
+	}
 	printf("the new path is :%s\n", new_path);
 	return;
 }
