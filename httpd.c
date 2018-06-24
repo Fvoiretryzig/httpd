@@ -105,6 +105,10 @@ void send_body(int client, char* path)
 {
 	FILE* fp = NULL;
 	fp = fopen(path, "r");
+	if(fp == NULL){
+		printf("\033[41;37mthe file %s is not existed\033[0m\n", path);
+		deal_error();
+	}
 	char buf[1024];
  	while (fgets(buf, sizeof(buf), fp) != NULL)
  	{
@@ -130,13 +134,13 @@ void make_response(int client, char* file_path)
 		printf("\033[41;37mCANNOT support this type!!!!\033[0m\n");
 		deal_error();
 	}
-	if(fp == NULL){
-		deal_notfound(client, type);
-	}
-	else{
+//	if(fp == NULL){
+	//	deal_notfound(client, type);
+	//}
+	//else{
 		send_header(client, type);
 		send_body(client, file_path);
-	}
+	//}
 }
 void *request_parse(int client)
 {
