@@ -112,16 +112,20 @@ void make_response(int client, char* file_path)
 {
 	FILE* fp = NULL;  
 	char type[64];
-	
-	for(int i = 0; i<strlen(file_path); i++){
-		if(!strcmp(file_path+i, ".")){
-			if(strcmp(file_path+i+1, "/")){
-				int j = 0;
-				while(i<strlen(file_path)){
-					type[j++] = file_path[i++];
-				}
-			}
-		}
+	strcpy(type, "no type");
+
+	char* ptr = NULL;
+	ptr = strstr(file_path, ".html");
+	if(ptr){
+		strcpy(type, ".html");
+	}
+	ptr = strstr(file_path, ".css");
+	if(ptr){
+		strcpy(type, ".css");
+	}
+	if(!strcmp(type, "nothing")){
+		printf("\033[41;37mCANNOT support this type!!!!\033[0m\n");
+		deal_error();
 	}
 	printf("type:%s\n", type);
 	fp = fopen(file_path, "r");
