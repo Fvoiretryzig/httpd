@@ -179,7 +179,29 @@ void sighandler(int signum)
 		exit(0);	
 	}
 }
-
+char *my_strstr(char *dest,char *src)  
+{  
+    char *ptr=NULL;  
+    char *str1=dest;  
+    char *str2=src;  
+    assert(dest);  
+    assert(dest);
+    printf("dest:%s src:%s\n", dest, src);  
+    while(*str1 != '\0')  
+    {  
+        ptr=str1;  
+        while((*str1 != '\0') && (*str2 != '\0') && (*str1 == *str2))  
+        {  
+            str1++;  
+            str2++;  
+        }  
+        if(*str2 == '\0')  
+            return (char *)ptr;  
+        str1=ptr+1;  
+        str2=src;  
+    }  
+    return 0;  
+}
 void parse_path(char* path, char* new_path)
 {
 	int ptr = 0;
@@ -187,7 +209,7 @@ void parse_path(char* path, char* new_path)
 	
 	strcpy(new_path, path);
 	
-	temp = strstr(path, "../");
+	temp = my_strstr(path, "../");
 	while(temp){
 		int slant_pos = -1;
 		ptr = path - temp;
