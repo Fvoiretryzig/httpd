@@ -169,7 +169,7 @@ void make_response(int client, char* file_path)
 void *request_parse(void* arg)
 {
 	printf("in request_parse\n");
-	int client = (int)arg;
+	int client = (int) *arg;
 	char buf[1024]; char file_path[256]; char url[128]; char method[256];
 	int line_len = 0;
 	int ptr1 = 0, ptr2 = 0;
