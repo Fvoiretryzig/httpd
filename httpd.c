@@ -188,6 +188,7 @@ char *my_strstr(char *dest,char *src)
     assert(dest);  
     while(*str1 != '\0')  
     {  
+    	printf("ptr:0x%08x\n", ptr);
         ptr=str1;  
         while((*str1 != '\0') && (*str2 != '\0') && (*str1 == *str2))  
         {  
