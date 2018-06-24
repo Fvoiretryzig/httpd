@@ -46,6 +46,7 @@ int read_line(int client, char* buf, int size)	//CRLF, /n
 		}
 	}
 	buf[cnt] = '\0';
+	return strlen(buf);
 }
 void deal_error()
 {
@@ -228,14 +229,14 @@ int main(int argc, char *argv[])
     printf("\033[42;37mhttpd running on port %d\033[0m\n", port);
     
     while(1){
-    	client_fd = accept(server_sock, (struct sockaddr *)&client_addr, &client_addr_len);
+    	client_fd = accept(server_addr, (struct sockaddr *)&client_addr, &client_addr_len);
     	if(client_fd == -1){
     		printf("\033[41;37mclient create socket failed!!!!\033[0m\n");
     		exit(1);
     	}
     	/*============创建另一个线程处理报文信息============*/
     	if(pthread_create(t1, NULL, request_parse, client_fd) != 0){
-    		printf("\033[41;37mthread creating failed!!!!\033[0m\n")
+    		printf("\033[41;37mthread creating failed!!!!\033[0m\n");
     		exit(1);
     	}
     }
