@@ -6,12 +6,14 @@
 #include<sys/stat.h>
 #include<stdlib.h> 
 #include<signal.h>
+#include <ctype.h>
+
 
 char dir_name[64];
 int server_fd = -1;
 int client_fd = -1;
 
-int readline(int client, char* buf, int size);
+int read_line(int client, char* buf, int size);
 void deal_error();
 void deal_notfound(int client, char* type);
 void send_header(int client, char* type);
@@ -20,7 +22,7 @@ void make_response(int client, char* file_path);
 void request_parse(int client);
 void signal_handler_stop(int signal_num);
 
-int readline(int client, char* buf, int size)	//CRLF, /n
+int read_line(int client, char* buf, int size)	//CRLF, /n
 {
 	int cnt = 0;
 	char temp = '\0';
@@ -102,8 +104,7 @@ void sent_content(int client, FILE* fp)
 }
 void make_response(int client, char* file_path)
 {
-	FILE* fp = NULL; 
-	char buf[1024]; 
+	FILE* fp = NULL;  
 	char type[64];
 	
 	for(int i = 0; i<strlen(file_path); i++){
