@@ -31,6 +31,7 @@ int read_line(int client, char* buf, int size)	//CRLF, /n
 	int recv_size = 0;
 	while ((temp != '\n') && (cnt < size-1)){
 		recv_size = recv(client, &temp, 1, 0);
+		printf("in read_line temp:%c\n", temp);
 		if (recv_size > 0){
 			if (temp == '\r'){
 				recv_size = recv(client, &temp, 1, MSG_PEEK);	//保留
