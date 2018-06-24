@@ -206,7 +206,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	/*===============中断处理注册===============*/
-	signal_handler stop_signal = signal_handler_stop;
+	struct signal_handler stop_signal = signal_handler_stop;
 	signal(SIGINT,stop_signal);
 	/*===============创建套接字===============*/
 	server_fd = socket(AF_INET, SOCK_STREAM, 0);
