@@ -142,11 +142,11 @@ void *request_parse(void* arg)
 	//struct stat buffer;
 	
 	line_len = read_line(client, buf, sizeof(buf));
+	printf("buf:%s\n", buf);
 	while(!isspace(buf[ptr1]) && (ptr1<line_len-1)){
 		method[ptr2++] = buf[ptr1++];
 	}
 	method[ptr2] = '\0';
-	printf("method:%s\n", method);
 	if(strcasecmp(method, "GET")){
 		printf("\033[41;37mthis server only support \"GET\"!!\033[0m\n");
 		deal_error();
