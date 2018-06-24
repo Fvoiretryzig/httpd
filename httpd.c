@@ -24,7 +24,7 @@ void make_response(int client, char* file_path);
 void *request_parse(void* arg);
 void signal_handler_stop(int signal_num);
 
-int read_line(int client, char* buf, int size)	//CRLF, /n
+/*int read_line(int client, char* buf, int size)	//CRLF, /n
 {
 	int cnt = 0;
 	char temp = '\0';
@@ -50,7 +50,34 @@ int read_line(int client, char* buf, int size)	//CRLF, /n
 	}
 	buf[cnt] = '\0';
 	return strlen(buf);
+}*/
+int read_line(int sock, char *buf, int size)
+{
+	int cnt = 0;
+	char temp = '\0';
+	int recv_size;
+
+	while ((cnt < size - 1) && (temp != '\n')){
+		recv_size= recv(sock, &temp, 1, 0);
+		if (recv_size > 0){
+			if (temp== '\r'){
+				recv_size = recv(sock, &temp, 1, MSG_PEEK);
+			if ((recv_size > 0) && (temp == '\n'))
+						recv(sock, &temp, 1, 0);
+				else
+					temp = '\n';
+			}
+			buf[cnt] = temp;
+			cnt++;
+		}
+			else
+			temp = '\n';
+	}
+	buf[cnt] = '\0';
+ 
+	return cnt;
 }
+
 void deal_error()
 {
 	if((server_fd != -1)){
