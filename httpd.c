@@ -169,12 +169,12 @@ void make_response(int client, char* file_path)
 void *request_parse(void* arg)
 {
 	printf("in request_parse\n");
-	int client = (int)(int *)arg;
+	int client = (int)arg;
 	char buf[1024]; char file_path[256]; char url[128]; char method[256];
 	int line_len = 0;
 	int ptr1 = 0, ptr2 = 0;
 	//struct stat buffer;
-	printf("in request_parse: client:%d", client);
+	printf("in request_parse: client:%d\n", client);
 	line_len = read_line(client, buf, sizeof(buf));
 	printf("buf:%s\n", buf);
 	while(!isspace(buf[ptr1]) && (ptr1<line_len-1)){
