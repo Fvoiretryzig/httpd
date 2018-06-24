@@ -161,7 +161,7 @@ void* request_parse(int client)
 	}
 	make_response(client, file_path);
 	close(client);
-	return;
+	//return;
 }
 void sighandler(int);
 void sighandler(int signum)
