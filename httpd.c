@@ -240,6 +240,7 @@ void parse_path(char* path, char* new_path)
 	}
 	new_path[ptr] = '\0'; path[ptr] = '\0';	
 	temp = strstr(path, "./");
+	printf("temp:0x%08x\n", temp);
 	while(temp){
 		ptr = temp - path;
 		printf("ptr:%d\n", ptr);
