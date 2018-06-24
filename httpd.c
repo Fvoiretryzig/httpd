@@ -24,7 +24,7 @@ void deal_notfound(int client);
 void send_header(int client, char* type);
 void send_body(int client, FILE *fp);
 void make_response(int client, char* file_path);
-void *request_parse(int client);
+void *request_parse(void* arg);
 void signal_handler_stop(int signal_num);
 
 int read_line(int client, char* buf, int size)	//CRLF, /n
@@ -154,9 +154,9 @@ void make_response(int client, char* file_path)
 	}
 	fclose(fp);
 }
-void *request_parse(int client)
+void *request_parse(void* arg)
 {
-	//int client = (int) *arg;
+	int client = *((int*)arg);
 	char buf[1024]; char file_path[512]; char url[128]; char method[256];
 	int line_len = 0;
 	int ptr1 = 0, ptr2 = 0;
@@ -195,9 +195,9 @@ void *request_parse(int client)
 void sighandler(int);
 void sighandler(int signum)
 {
-//   printf("捕获信号 %d，跳出...\n", signum);
-//   exit(1);
+   
 	if(signum == SIGINT){
+		printf("\nthis is stop signal:%d\n", signum);
 		if((server_fd != -1)){
 			close(server_fd);
 		}
@@ -338,7 +338,7 @@ int main(int argc, char *argv[])
     		exit(1);
     	}
     	/*============创建另一个线程处理报文信息============*/
-    	if(pthread_create(&t1, NULL, request_parse, client_fd) != 0){
+    	if(pthread_create(&t1, NULL, request_parse, (void *)&client_fd) != 0){
     		printf("\033[41;37mthread creating failed!!!!\033[0m\n");
     		exit(1);
     	}
