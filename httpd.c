@@ -163,20 +163,21 @@ void request_parse(int client)
 	close(client);
 	return;
 }
-sighandler_t sigint(int signal_num)
+void sighandler(int);
+void sighandler(int signum)
 {
+//   printf("捕获信号 %d，跳出...\n", signum);
+//   exit(1);
 	if(signal_num == SIGINT){
-	if((server_fd != -1)){
-		close(server_fd);
+		if((server_fd != -1)){
+			close(server_fd);
+		}
+		if((client_fd != -1)){
+			close(client_fd);
+		}
+		exit(0);	
 	}
-	if((client_fd != -1)){
-		close(client_fd);
-	}
-	exit(0);	
-	}
-	return;
 }
-
 int main(int argc, char *argv[]) 
 {
     struct sockaddr_in server_addr;
@@ -210,8 +211,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	/*===============中断处理注册===============*/
-	sighandler_t handler = sigint;
-	signal(SIGINT,handler);
+	signal(SIGINT, sighandler);
 	/*===============创建套接字===============*/
 	server_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if(server_fd == -1){
