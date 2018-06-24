@@ -153,6 +153,7 @@ void make_response(int client, char* file_path)
 	}
 	send_header(client, type);
 	send_body(client, file_path);
+	printf("hahah\n");
 }
 void *request_parse(int client)
 {
