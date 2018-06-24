@@ -88,8 +88,9 @@ void send_header(int client, char* type)
 	strcpy(buf, "HTTP/1.0 200 OK\r\n");
 	printf("buf:%s\n", buf);
 	if(send(client, buf, strlen(buf), 0) == -1){
-		perror(send);
-	}
+			printf("\033[41;37msend error\033[0m\n", path);
+			deal_error();
+		}
 	if(!strcmp(type, ".html") || !strcmp(type, "htm")){
 		strcpy(buf, "Content-Type: text/html\r\n");
 	}
@@ -98,12 +99,14 @@ void send_header(int client, char* type)
 	}
 	printf("buf:%s", buf);
 	if(send(client, buf, strlen(buf), 0) == -1){
-		perror(send);
-	}
+			printf("\033[41;37msend error\033[0m\n", path);
+			deal_error();
+		}
 	strcpy(buf, "\r\n");
 	if(send(client, buf, strlen(buf), 0) == -1){
-		perror(send);
-	}
+			printf("\033[41;37msend error\033[0m\n", path);
+			deal_error();
+		}
 	return;
 }
 
@@ -118,9 +121,9 @@ void send_body(int client, char* path)
 	char buf[1024];
  	while (fgets(buf, sizeof(buf), fp) != NULL)
  	{
- 		printf("buf:%s\n", buf);
   		if(send(client, buf, strlen(buf), 0) == -1){
-		perror(send);
+			printf("\033[41;37msend error\033[0m\n", path);
+			deal_error();
 		}
 	}
 	return;	
