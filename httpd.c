@@ -168,7 +168,7 @@ void sighandler(int signum)
 {
 //   printf("捕获信号 %d，跳出...\n", signum);
 //   exit(1);
-	if(signal_num == SIGINT){
+	if(signum == SIGINT){
 		if((server_fd != -1)){
 			close(server_fd);
 		}
