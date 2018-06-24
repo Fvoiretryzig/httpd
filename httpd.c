@@ -54,11 +54,11 @@ void deal_error()
 {
 	if((server_fd != -1)){
 		printf("\033[41;37mclose server_fd\033[0m\n");
-		close(server_fd);
+		closesocket(server_fd);
 	}
 	if((client_fd != -1)){
 		printf("\033[41;37mclose client_fd\033[0m\n");
-		close(client_fd);
+		closesocket(client_fd);
 	}
 	exit(1);
 }
