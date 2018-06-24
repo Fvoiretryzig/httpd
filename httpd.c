@@ -118,7 +118,7 @@ void send_body(int client, char* path)
 	char buf[1024];
  	while (fgets(buf, sizeof(buf), fp) != NULL)
  	{
- 		printf("buf:%s\n");
+ 		printf("buf:%s\n", buf);
   		if(send(client, buf, strlen(buf), 0) == -1){
 		perror(send);
 		}
