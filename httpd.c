@@ -32,7 +32,6 @@ int read_line(int client, char* buf, int size)	//CRLF, /n
 	int recv_size = 0;
 	while ((temp != '\n') && (cnt < size-1)){
 		recv_size = recv(client, &temp, 1, 0);
-		printf("in read_line temp:%c\n", temp);
 		if (recv_size > 0){
 			if (temp == '\r'){
 				recv_size = recv(client, &temp, 1, MSG_PEEK);	//保留
@@ -52,37 +51,6 @@ int read_line(int client, char* buf, int size)	//CRLF, /n
 	buf[cnt] = '\0';
 	return strlen(buf);
 }
-/*int read_line(int sock, char *buf, int size)
-{
-	int cnt = 0;
-	char temp = '\0';
-	int recv_size;
-
-	while ((cnt < size - 1) && (temp != '\n')){
-		recv_size= recv(sock, &temp, 1, 0);
-		if(recv_size == -1){
-			perror("recv");
-			deal_error();
-		}
-		printf("recv_size:%d\n", recv_size);
-		if (recv_size > 0){
-			if (temp== '\r'){
-				recv_size = recv(sock, &temp, 1, MSG_PEEK);
-			if ((recv_size > 0) && (temp == '\n'))
-						recv(sock, &temp, 1, 0);
-				else
-					temp = '\n';
-			}
-			buf[cnt] = temp;
-			cnt++;
-		}
-			else
-			temp = '\n';
-	}
-	buf[cnt] = '\0';
- 
-	return cnt;
-}*/
 
 void deal_error()
 {
@@ -192,6 +160,7 @@ void *request_parse(int client)
 		url[ptr2++] = buf[ptr1++];
 	}
 	url[ptr2] = '\0';
+	printf("url:%s\n", url);
 	strcat(dir_name, url);
 	strcpy(file_path, dir_name);
 	if(file_path[strlen(file_path)-1] == '/'){
