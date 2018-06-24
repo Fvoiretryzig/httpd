@@ -220,7 +220,7 @@ void parse_path(char* path, char* new_path)
 		ptr = temp - path;
 		for(int i = 0; i<ptr; i++){
 			printf("path[%d]:%c\n", i, path[i]);
-			if(!strcmp(path+i, "/")){
+			if(path[i] == '/'){
 				slant_pos = i;	
 			}
 		}
