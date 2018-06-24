@@ -237,7 +237,8 @@ int main(int argc, char *argv[])
 		strcpy(port_c, argv[2]);
 		port = (u_short)atoi(port_c);
 		printf("\033[42;37mthe port is %d\033[0m\n", port);
-		strcpy(dir_name, argv[3]);
+		parse(agrv[3], dir_name);
+		//strcpy(dir_name, argv[3]);
 		printf("\033[42;37mthe directory name is: %s\033[0m\n", dir_name);
 	}
 	else if(!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help")){
