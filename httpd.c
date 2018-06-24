@@ -88,7 +88,7 @@ void send_header(int client, char* type)
 	strcpy(buf, "HTTP/1.0 200 OK\r\n");
 	printf("buf:%s\n", buf);
 	if(send(client, buf, strlen(buf), 0) == -1){
-			printf("\033[41;37msend error\033[0m\n", path);
+			printf("\033[41;37msend error\033[0m\n");
 			deal_error();
 		}
 	if(!strcmp(type, ".html") || !strcmp(type, "htm")){
