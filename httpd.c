@@ -20,9 +20,9 @@ int client_fd = -1;
 
 int read_line(int client, char* buf, int size);
 void deal_error();
-void deal_notfound(int client, char* type);
+void deal_notfound(int client);
 void send_header(int client, char* type);
-void send_body(int client, char* path);
+void send_body(int client, FILE *fp);
 void make_response(int client, char* file_path);
 void *request_parse(int client);
 void signal_handler_stop(int signal_num);
@@ -53,7 +53,6 @@ int read_line(int client, char* buf, int size)	//CRLF, /n
 	buf[cnt] = '\0';
 	return strlen(buf);
 }
-
 void deal_error()
 {
 	if((server_fd != -1)){
@@ -66,19 +65,12 @@ void deal_error()
 	}
 	exit(1);
 }
-void deal_notfound(int client, char* type)
+void deal_notfound(int client)
 {
 	char buf[1024];
-	char content_type[64];
-	if(!strcmp(type, "html") || !strcmp(type, "htm")){
-		strcpy(content_type, "Content-Type: text/html\r\n");
-	}
-	else if(!strcmp(type, "css")){
-		strcpy(content_type, "Content-Type: text/css\r\n");
-	}
-	sprintf(buf, "Content-Type: text/html\r\nContent-Type: %s\r\n\r\n", content_type);
+	sprintf(buf, "Content-Type: text/html\r\nContent-Type: text/html\r\n\r\n");
 	send(client, buf, strlen(buf), 0);
-	sprintf(buf, "<HTML><TITLE>Not Found</TITLE>\r\n<BODY><P>The server could not fulfill\r\nyour request because the resource specified\r\nis unavailable or nonexistent.\r\n</BODY></HTML>\r\n");
+	sprintf(buf, "<HTML><TITLE>404Not Found</TITLE>\r\n<BODY><P>404NOT FOUND\r\n</BODY></HTML>\r\n");
 	send(client, buf, strlen(buf), 0);
 	
 	return;
@@ -115,30 +107,21 @@ void send_header(int client, char* type)
 	return;
 }
 
-void send_body(int client, char* path)
+void send_body(int client, FILE* fp)
 {
-	FILE* fp = NULL;
-	fp = fopen(path, "r");
-	if(fp == NULL){
-		printf("\033[41;37mthe file %s is not existed\033[0m\n", path);
-		deal_error();
-	}
 	char buf[1024];
  	while (fgets(buf, sizeof(buf), fp) != NULL)
  	{
   		if(send(client, buf, strlen(buf), 0) == -1){
 			printf("\033[41;37msend error\033[0m\n");
 			deal_error();
-	}
+		}
 	}
 	return;	
 }
 void make_response(int client, char* file_path)
 {
-	char type[64];
-	strcpy(type, "no type");
-
-	char* ptr = NULL;
+	char type[64]; char* ptr = NULL;
 	ptr = strstr(file_path, ".html");
 	if(ptr){
 		strcpy(type, ".html");
@@ -151,24 +134,30 @@ void make_response(int client, char* file_path)
 		printf("\033[41;37mCANNOT support this type!!!!\033[0m\n");
 		deal_error();
 	}
+	/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+	int cnt = 0;
 	char buf[1024];
-        sprintf(buf, "HTTP/1.0 200 OK\r\n");
-        send(client_fd, buf, strlen(buf), 0);
-        strcpy(buf, SERVER_STRING);
-        send(client_fd, buf, strlen(buf), 0);
-        sprintf(buf, "Content-Type: text/html\r\n");
-        send(client_fd, buf, strlen(buf), 0);
-        strcpy(buf, "\r\n");
-        send(client_fd, buf, strlen(buf), 0);
-        sprintf(buf, "Hello World\r\n");
-        send(client_fd, buf, strlen(buf), 0);	
-	//send_header(client, type);
-	//send_body(client, file_path);
+	strcpy(buf, "nothing");
+	cnt = read_line(client, buf, sizeof(buf));
+	while ((cnt > 0) && strcmp("\n", buf)){
+		cnt = read_line(client, buf, sizeof(buf));
+	}
+	/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/	
+	FILE* fp = NULL;  
+	fp = fopen(file_path, "r");
+	if(fp == NULL){
+		not_found(client);
+	}
+	else{
+		send_header(client, type);
+		send_body(client, fp);
+	}
+	fclose(fp);
 }
-void *request_parse(int client)
+void request_parse(int client)
 {
 	//int client = (int) *arg;
-	char buf[1024]; char file_path[256]; char url[128]; char method[256];
+	char buf[1024]; char file_path[512]; char url[128]; char method[256];
 	int line_len = 0;
 	int ptr1 = 0, ptr2 = 0;
 	//struct stat buffer;
@@ -191,14 +180,18 @@ void *request_parse(int client)
 		url[ptr2++] = buf[ptr1++];
 	}
 	url[ptr2] = '\0';
-	strcat(dir_name, url);
-	strcpy(file_path, dir_name);
-	if(file_path[strlen(file_path)-1] == '/'){
-		strcat(file_path, "index.html");
+	/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+	sprintf(file_path, "%s%s", dir_name,url);	
+	//strcat(dir_name, url);
+	//strcpy(file_path, dir_name);
+	/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+	if((file_path[strlen(file_path)-1] == '/')){
+		//strcat(file_path, "index.html");
+		sprintf(file_path, "%sindex.html", file_path);
 	}
 	make_response(client, file_path);
 	close(client);
-	//return;
+	return;
 }
 void sighandler(int);
 void sighandler(int signum)
@@ -214,34 +207,6 @@ void sighandler(int signum)
 		}
 		exit(0);	
 	}
-}
-char *my_strstr(char *dest,char *src)  
-{  
-    char *ptr=NULL;  
-    char *str1=dest;  
-    char *str2=src;  
-    printf("dest:%s src:%s\n", dest, src);
-    assert(dest);  
-    assert(dest);  
-    while(*str1 != '\0')  
-    {  
-    	printf("ptr:0x%08x\n", (uint32_t)ptr);
-        ptr=str1;  
-        while((*str1 != '\0') && (*str2 != '\0') && (*str1 == *str2))  
-        {  
-        	printf("in while:str1:%s str2:%s\n", str1, str2);
-            str1++;  
-            str2++;  
-        }  
-        printf("in out while: str1:%sxixi str2:%shahah\n", str1, str2); 
-        if(*str2 == '\0'){
-        	printf("in return if\n");
-            return (char *)ptr;  
-           }
-        str1=ptr+1;  
-        str2=src;  
-    }  
-    return 0;  
 }
 void parse_path(char* path, char* new_path)
 {
