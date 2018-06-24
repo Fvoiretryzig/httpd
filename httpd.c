@@ -187,6 +187,7 @@ void parse_path(char* path, char* new_path)
 	strcpy(new_path, path);
 	temp = strstr(path, "/.");
 	while(temp){
+		printf("in while\n");
 		ptr = path - temp;
 		printf("in parse_path ptr:%d\n", ptr);
 		for(int i = ptr; i<strlen(path)-2; i++){
