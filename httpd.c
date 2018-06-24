@@ -20,7 +20,7 @@ int read_line(int client, char* buf, int size);
 void deal_error();
 void deal_notfound(int client, char* type);
 void send_header(int client, char* type);
-void send_body(int client, FILE* fp);
+void send_body(int client, char* path);
 void make_response(int client, char* file_path);
 void *request_parse(int client);
 void signal_handler_stop(int signal_num);
@@ -86,21 +86,25 @@ void send_header(int client, char* type)
 	char buf[1024];
 	
 	strcpy(buf, "HTTP/1.0 200 OK\r\n");
+	printf("buf:%s\n", buf);
 	send(client, buf, strlen(buf), 0);
-	if(!strcmp(type, "html") || !strcmp(type, "htm")){
+	if(!strcmp(type, ".html") || !strcmp(type, "htm")){
 		strcpy(buf, "Content-Type: text/html\r\n");
 	}
-	else if(!strcmp(type, "css")){
+	else if(!strcmp(type, ".css")){
 		strcpy(buf, "Content-Type: text/css\r\n");
 	}
+	printf("buf:%s", buf);
 	send(client, buf, strlen(buf), 0);
 	strcpy(buf, "\r\n");
 	send(client, buf, strlen(buf), 0);
 	return;
 }
 
-void send_body(int client, FILE* fp)
+void send_body(int client, char* path)
 {
+	FILE* fp = NULL;
+	fp = fopen(path, "r");
 	char buf[1024];
  	while (fgets(buf, sizeof(buf), fp) != NULL)
  	{
@@ -110,7 +114,6 @@ void send_body(int client, FILE* fp)
 }
 void make_response(int client, char* file_path)
 {
-	FILE* fp = NULL;  
 	char type[64];
 	strcpy(type, "no type");
 
@@ -127,16 +130,13 @@ void make_response(int client, char* file_path)
 		printf("\033[41;37mCANNOT support this type!!!!\033[0m\n");
 		deal_error();
 	}
-	printf("type:%s\n", type);
-	fp = fopen(file_path, "r");
 	if(fp == NULL){
 		deal_notfound(client, type);
 	}
 	else{
 		send_header(client, type);
-		send_body(client, fp);
+		send_body(client, file_path);
 	}
-	fclose(fp);
 }
 void *request_parse(int client)
 {
