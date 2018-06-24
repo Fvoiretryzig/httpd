@@ -163,7 +163,7 @@ void request_parse(int client)
 	close(client);
 	return;
 }
-void sigint(int signal_num)
+sighandler_t sigint(int signal_num)
 {
 	if(signal_num == SIGINT){
 	if((server_fd != -1)){
@@ -210,8 +210,8 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	/*===============中断处理注册===============*/
-	sighandler_t stop_signal = signal_handler_stop;
-	signal(SIGINT,stop_signal);
+	sighandler_t handler = sigint;
+	signal(SIGINT,handler);
 	/*===============创建套接字===============*/
 	server_fd = socket(AF_INET, SOCK_STREAM, 0);
 	if(server_fd == -1){
