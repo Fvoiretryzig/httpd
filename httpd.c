@@ -216,6 +216,7 @@ void parse_path(char* path, char* new_path)
 	temp = strstr(path, "../");
 	printf("temp addr:0x%08x\n", (uint32_t)temp);
 	while(temp){
+		printf("haha");
 		int slant_pos = -1;
 		ptr = path - temp;
 		for(int i = 0; i<ptr; i++){
