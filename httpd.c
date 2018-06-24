@@ -214,11 +214,9 @@ void parse_path(char* path, char* new_path)
 	strcpy(new_path, path);
 	
 	temp = strstr(path, "../");
-	printf("temp addr:0x%08x\n", (uint32_t)temp);
 	while(temp){
-		printf("haha");
 		int slant_pos = -1;
-		ptr = path - temp;
+		ptr = temp - path;
 		for(int i = 0; i<ptr; i++){
 			printf("path[%d]:%c\n", i, path[i]);
 			if(!strcmp(path+i, "/")){
