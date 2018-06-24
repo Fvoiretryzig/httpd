@@ -216,13 +216,17 @@ void parse_path(char* path, char* new_path)
 	
 	temp = strstr(path, "../");
 	while(temp){
-		int slant_pos = -1;
+		int slant_pos1 = -2; int slant_pos2 = -1;
 		ptr = temp - path;
 		for(int i = 0; i<ptr; i++){
 			if(path[i] == '/'){
-				slant_pos = i;	
+				if(slant_pos1 < slant_pos2)
+					slant_pos1 = i;
+				else
+					slant_pos2 = i;	
 			}
 		}
+		int slant_pos = slant_pos1<slant_pos2?slant_pos1:slant_pos2;
 		if(slant_pos == -1){
 			printf("\033[41;37mInvalid file path!!!!\033[0m\n");
 			deal_error();
