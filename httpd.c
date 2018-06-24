@@ -144,7 +144,7 @@ void *request_parse(void* arg)
 		method[ptr2++] = buf[ptr1++];
 	}
 	method[ptr2] = '\0';
-	if(strcmp(method, "GET")){
+	if(strcasecmp(method, "GET")){
 		printf("\033[41;37mthis server only support \"GET\"!!\033[0m\n");
 		deal_error();
 	}
