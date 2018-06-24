@@ -184,6 +184,7 @@ char *my_strstr(char *dest,char *src)
     char *ptr=NULL;  
     char *str1=dest;  
     char *str2=src;  
+    printf("dest:%s src:%s\n", dest, src);
     assert(dest);  
     assert(dest);  
     while(*str1 != '\0')  
@@ -240,7 +241,6 @@ void parse_path(char* path, char* new_path)
 	}
 	new_path[ptr] = '\0'; path[ptr] = '\0';	
 	temp = my_strstr(path, "./");
-	printf("temp:0x%08x\n", temp);
 	while(temp){
 		ptr = temp - path;
 		printf("ptr:%d\n", ptr);
