@@ -60,8 +60,11 @@ int read_line(int sock, char *buf, int size)
 
 	while ((cnt < size - 1) && (temp != '\n')){
 		recv_size= recv(sock, &temp, 1, 0);
+		if(recv_size == -1){
+			perror("recv");
+			deal_error();
+		}
 		printf("recv_size:%d\n", recv_size);
-		printf("errorno:%d\n",errno);
 		if (recv_size > 0){
 			if (temp== '\r'){
 				recv_size = recv(sock, &temp, 1, MSG_PEEK);
