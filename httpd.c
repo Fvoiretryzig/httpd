@@ -54,11 +54,11 @@ void deal_error()
 {
 	if((server_fd != -1)){
 		printf("\033[41;37mclose server_fd\033[0m\n");
-		closesocket(server_fd);
+		close(server_fd);
 	}
 	if((client_fd != -1)){
 		printf("\033[41;37mclose client_fd\033[0m\n");
-		closesocket(client_fd);
+		close(client_fd);
 	}
 	exit(1);
 }
@@ -328,6 +328,8 @@ int main(int argc, char *argv[])
     	printf("\033[41;37mbind failed!!!!\033[0m\n");
     	exit(1);
     }
+    int mw_optval = 1;
+     setsockopt(server_sockfd, SOL_SOCKET, SO_REUSEADDR, (char *)&mw_optval,sizeof(mw_optval));
     if (listen(server_fd, 4) < 0) {
         printf("\033[41;37mlisten failed!!!!\033[0m\n");
         exit(-1);
