@@ -154,7 +154,7 @@ void make_response(int client, char* file_path)
 	}
 	fclose(fp);
 }
-void request_parse(int client)
+void *request_parse(int client)
 {
 	//int client = (int) *arg;
 	char buf[1024]; char file_path[512]; char url[128]; char method[256];
