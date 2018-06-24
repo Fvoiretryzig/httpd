@@ -121,6 +121,7 @@ void send_body(int client, char* path)
  		printf("buf:%s\n");
   		if(send(client, buf, strlen(buf), 0) == -1){
 		perror(send);
+		}
 	}
 	return;	
 }
