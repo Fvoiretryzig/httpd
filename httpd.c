@@ -130,8 +130,9 @@ void make_response(int client, char* file_path)
 	}
 	fclose(fp);
 }
-void *request_parse(int client)
+void *request_parse(void* arg)
 {
+	int client = (int *)arg;
 	char buf[1024]; char file_path[256]; char url[128]; char method[256];
 	int line_len = 0;
 	int ptr1 = 0, ptr2 = 0;
@@ -239,8 +240,7 @@ int main(int argc, char *argv[])
     		exit(1);
     	}
     	/*============创建另一个线程处理报文信息============*/
-    	void* arg = &client_fd;
-    	if(pthread_create(&t1, NULL, request_parse, arg) != 0){
+    	if(pthread_create(&t1, NULL, request_parse, &client_fd) != 0){
     		printf("\033[41;37mthread creating failed!!!!\033[0m\n");
     		exit(1);
     	}
