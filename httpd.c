@@ -26,14 +26,14 @@ int readline(int client, char* buf, int size)	//CRLF, /n
     				temp = '\n';
     			}
    			}
-   			buf[ptr] = temp;
-			ptr++;
+   			buf[cnt] = temp;
+			cnt++;
 		}
 		else{
-			ptr = '\n';	
+			buf[cnt] = '\n';	
 		}
 	}
-	buf[i] = '\0';
+	buf[cnt] = '\0';
 }
 void deal_error()
 {
