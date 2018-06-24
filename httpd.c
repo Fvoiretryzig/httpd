@@ -52,7 +52,7 @@ void deal_notfound(int client, char* type)
 	if(!strcmp(type, "html") || !strcmp(type, "htm")){
 		strcpy(content_type, "Content-Type: text/html\r\n");
 	}
-	else if(!strcmp(tyep, "css")){
+	else if(!strcmp(type, "css")){
 		strcpy(content_type, "Content-Type: text/css\r\n");
 	}
 	sprintf(buf, "Content-Type: text/html\r\nContent-Type: %s\r\n\r\n", content_type);
@@ -71,7 +71,7 @@ void send_header(int client, char* type)
 	if(!strcmp(type, "html") || !strcmp(type, "htm")){
 		strcpy(buf, "Content-Type: text/html\r\n");
 	}
-	else if(!strcmp(tyep, "css")){
+	else if(!strcmp(type, "css")){
 		strcpy(buf, "Content-Type: text/css\r\n");
 	}
 	send(client, buf, strlen(buf), 0);
@@ -79,6 +79,7 @@ void send_header(int client, char* type)
 	send(client, buf, strlen(buf), 0);
 	return;
 }
+void sent_content(int client, FILE* fp);
 void sent_content(int client, FILE* fp)
 {
 	char buf[1024];
