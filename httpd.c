@@ -218,9 +218,7 @@ void parse_path(char* path, char* new_path)
 	while(temp){
 		int slant_pos = -1;
 		ptr = temp - path;
-		printf("ptr:%d\n", ptr);
 		for(int i = 0; i<ptr; i++){
-			//printf("path[%d]:%c\n", i, path[i]);
 			if(path[i] == '/'){
 				slant_pos = i;	
 			}
@@ -240,7 +238,6 @@ void parse_path(char* path, char* new_path)
 		if(!strcmp(new_path+strlen(new_path)-3, "../")){
 			new_path[strlen(new_path)-3] = '\0';
 		}
-		printf("path:%s\n", new_path);
 		strcpy(path, new_path);
 		temp = strstr(path, "../");
 		if(!temp){
@@ -254,8 +251,6 @@ void parse_path(char* path, char* new_path)
 	temp = strstr(path, "./");
 	while(temp){
 		ptr = temp - path;
-		printf("ptr:%d\n", ptr);
-		printf("in parse_path ptr:%d\n", ptr);
 		int i;
 		int diff = 2;
 		for(i = ptr; i<strlen(path)-2; i++){
@@ -274,7 +269,6 @@ void parse_path(char* path, char* new_path)
 		new_path[ptr] = '\0'; 
 		path[ptr] = '\0';
 	}
-	printf("the new path is :%s\n", new_path);
 	return;
 }
 int main(int argc, char *argv[]) 
