@@ -329,7 +329,7 @@ int main(int argc, char *argv[])
     	exit(1);
     }
     int mw_optval = 1;
-     setsockopt(server_sockfd, SOL_SOCKET, SO_REUSEADDR, (char *)&mw_optval,sizeof(mw_optval));
+     setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, (char *)&mw_optval,sizeof(mw_optval));
     if (listen(server_fd, 4) < 0) {
         printf("\033[41;37mlisten failed!!!!\033[0m\n");
         exit(-1);
