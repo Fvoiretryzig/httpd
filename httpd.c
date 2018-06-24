@@ -247,3 +247,5 @@ int main(int argc, char *argv[])
     close(server_fd);
 	return 0;
 }
+//	#gcc -std=gnu99 -O1 -Wall -lpthread -o $(LAB) $(LAB).c
+	#gcc -g -o -Wall -lpthread $(LAB) $(LAB).c
