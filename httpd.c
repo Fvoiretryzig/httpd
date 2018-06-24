@@ -123,7 +123,7 @@ void make_response(int client, char* file_path)
 			}
 		}
 	}
-	
+	printf("type:%s\n", type);
 	fp = fopen(file_path, "r");
 	if(fp == NULL){
 		deal_notfound(client, type);
@@ -165,7 +165,6 @@ void *request_parse(int client)
 	if(file_path[strlen(file_path)-1] == '/'){
 		strcat(file_path, "index.html");
 	}
-	printf("file_path:%s\n", file_path);
 	make_response(client, file_path);
 	close(client);
 	//return;
