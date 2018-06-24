@@ -233,7 +233,7 @@ void parse_path(char* path, char* new_path)
 		int i;
 		for(i = slant_pos+1; i<strlen(path)-diff; i++){
 			if(path[i+diff] == '.' && path[i+diff+1] == '.' && path[i+diff+2] == '/'){
-				diff += 3;
+				diff += 4;
 			}
 			new_path[i] = path[i+diff];
 		}
