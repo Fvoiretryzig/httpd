@@ -146,13 +146,19 @@ void make_response(int client, char* file_path)
 		printf("\033[41;37mCANNOT support this type!!!!\033[0m\n");
 		deal_error();
 	}
-//	if(fp == NULL){
-	//	deal_notfound(client, type);
-	//}
-	//else{
-		send_header(client, type);
-		send_body(client, file_path);
-	//}
+	char* buf[1024];
+	    sprintf(buf, "HTTP/1.0 200 OK\r\n");
+        send(client_fd, buf, strlen(buf), 0);
+        strcpy(buf, SERVER_STRING);
+        send(client_fd, buf, strlen(buf), 0);
+        sprintf(buf, "Content-Type: text/html\r\n");
+        send(client_fd, buf, strlen(buf), 0);
+        strcpy(buf, "\r\n");
+        send(client_fd, buf, strlen(buf), 0);
+        sprintf(buf, "Hello World\r\n");
+        send(client_fd, buf, strlen(buf), 0);
+	//send_header(client, type);
+	//send_body(client, file_path);
 }
 void *request_parse(int client)
 {
