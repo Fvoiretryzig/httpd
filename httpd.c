@@ -163,15 +163,18 @@ void request_parse(int client)
 	close(client);
 	return;
 }
-void signal_handler_stop(int signal_num)
+void sigint(int signal_num)
 {
+	if(signal_num == SIGINT){
 	if((server_fd != -1)){
 		close(server_fd);
 	}
 	if((client_fd != -1)){
 		close(client_fd);
 	}
-	exit(1);
+	exit(0);	
+	}
+	return;
 }
 
 int main(int argc, char *argv[]) 
