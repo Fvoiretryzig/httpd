@@ -210,7 +210,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	/*===============中断处理注册===============*/
-	struct signal_handler stop_signal = signal_handler_stop;
+	sighandler_t stop_signal = signal_handler_stop;
 	signal(SIGINT,stop_signal);
 	/*===============创建套接字===============*/
 	server_fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -218,7 +218,7 @@ int main(int argc, char *argv[])
 		printf("\033[41;37mserver create socket failed!!!!\033[0m\n");
 		exit(1);
 	}
-	memset(server_addr, 0, sizeof(server_addr));
+	memset(&server_addr, 0, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
     server_addr.sin_addr.s_addr = htonl(INADDR_ANY);	
