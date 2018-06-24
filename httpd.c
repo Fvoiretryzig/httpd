@@ -237,6 +237,7 @@ void parse_path(char* path, char* new_path)
 			}
 			new_path[i] = path[i+diff];
 		}
+		printf("path:%s\n", new_path);
 		strcpy(path, new_path);
 		temp = strstr(path, "../");
 		if(!temp){
