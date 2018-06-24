@@ -179,6 +179,46 @@ void sighandler(int signum)
 		exit(0);	
 	}
 }
+char *parse_path(char* path)
+{
+	char new_path[256];
+	int ptr = 0;
+	char* temp;
+	
+	strcpy(new_path, path);
+	temp = strstr(path, "/.");
+	while(temp){
+		ptr = char_path - temp;
+		printf("in parse_path ptr:%d\n", ptr);
+		for(int i = ptr; i<strlen(path)-2; i++){
+			new_path[i] = path[i+2];		
+		}
+		strcpy(path, new_path);
+		temp = strstr(path, "/.");
+	}
+	temp = strstr(path, "/..");
+	while(temp){
+		int slant_pos = -1;
+		ptr = char_path - temp;
+		for(int i = 0; i<ptr; i++){
+			if(path[i] == '/'){
+				slant_pos = i;	
+			}
+		}
+		if(slant_pos == -1){
+			printf("\033[41;37mInvalid file path!!!!\033[0m\n");
+			deal_error();
+		}
+		int diff = ptr - slan_pos + 2;
+		for(int i = slant_pos+1; i<strlen(path)-diff; i++){
+			new_path[i] = path[i+diff];
+		}
+		strcpy(path, new_path);
+		temp = strstr(path, "/..");
+	}
+	printf("the new path is :%s\n", new_path);
+	return new_path;
+}
 int main(int argc, char *argv[]) 
 {
     struct sockaddr_in server_addr;
@@ -232,7 +272,6 @@ int main(int argc, char *argv[])
         exit(-1);
     }
     printf("\033[42;37mhttpd running on port %d\033[0m\n", port);
-    
     while(1){
     	client_fd = accept(server_fd, (struct sockaddr *)&client_addr, &client_addr_len);
     	if(client_fd == -1){
