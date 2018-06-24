@@ -10,6 +10,16 @@
 char dir_name[64];
 int server_fd = -1;
 int client_fd = -1;
+
+int readline(int client, char* buf, int size);
+void deal_error();
+void deal_notfound(int client, char* type);
+void send_header(int client, char* type);
+void sent_content(int client, FILE* fp);
+void make_response(int client, char* file_path);
+void request_parse(int client);
+void signal_handler_stop(int signal_num);
+
 int readline(int client, char* buf, int size)	//CRLF, /n
 {
 	int cnt = 0;
@@ -79,7 +89,7 @@ void send_header(int client, char* type)
 	send(client, buf, strlen(buf), 0);
 	return;
 }
-void sent_content(int client, FILE* fp);
+
 void sent_content(int client, FILE* fp)
 {
 	char buf[1024];
@@ -92,9 +102,7 @@ void sent_content(int client, FILE* fp)
 }
 void make_response(int client, char* file_path)
 {
-	char header[512];
-	FILE* fp = NULL;
-	char* temp = "Accept"; 
+	FILE* fp = NULL; 
 	char buf[1024]; 
 	char type[64];
 	
