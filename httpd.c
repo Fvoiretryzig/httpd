@@ -196,7 +196,11 @@ void parse_path(char* path, char* new_path)
 		}
 		strcpy(path, new_path);
 		temp = strstr(path, "./");
+		if(!temp){
+			ptr = i;
+		}
 	}
+	new_path[ptr] = '\0'; path[ptr] = '\0';
 	temp = strstr(path, "../");
 	while(temp){
 		int slant_pos = -1;
