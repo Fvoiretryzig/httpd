@@ -7,7 +7,7 @@
 #include<stdlib.h> 
 #include<signal.h>
 #include <ctype.h>
-
+#include<netinet/in.h>
 
 char dir_name[64];
 int server_fd = -1;
