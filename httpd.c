@@ -151,7 +151,7 @@ void make_response(int client, char* file_path)
 		printf("\033[41;37mCANNOT support this type!!!!\033[0m\n");
 		deal_error();
 	}
-	char* buf[1024];
+	char buf[1024];
         sprintf(buf, "HTTP/1.0 200 OK\r\n");
         send(client_fd, buf, strlen(buf), 0);
         strcpy(buf, SERVER_STRING);
