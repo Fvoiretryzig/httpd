@@ -179,9 +179,8 @@ void sighandler(int signum)
 		exit(0);	
 	}
 }
-char *parse_path(char* path)
+void parse_path(char* path, char* new_path)
 {
-	char new_path[256];
 	int ptr = 0;
 	char* temp;
 	
@@ -209,7 +208,7 @@ char *parse_path(char* path)
 			printf("\033[41;37mInvalid file path!!!!\033[0m\n");
 			deal_error();
 		}
-		int diff = ptr - slan_pos + 2;
+		int diff = ptr - slant_pos + 2;
 		for(int i = slant_pos+1; i<strlen(path)-diff; i++){
 			new_path[i] = path[i+diff];
 		}
@@ -217,7 +216,7 @@ char *parse_path(char* path)
 		temp = strstr(path, "/..");
 	}
 	printf("the new path is :%s\n", new_path);
-	return new_path;
+	return;
 }
 int main(int argc, char *argv[]) 
 {
