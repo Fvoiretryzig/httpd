@@ -10,6 +10,7 @@
 #include<netinet/in.h>
 #include<assert.h>
 #include<pthread.h>
+#include<errno.h>
 
 char dir_name[64];
 int server_fd = -1;
