@@ -53,9 +53,11 @@ int read_line(int client, char* buf, int size)	//CRLF, /n
 void deal_error()
 {
 	if((server_fd != -1)){
+		printf("\033[41;37mclose server_fd\033[0m\n");
 		close(server_fd);
 	}
 	if((client_fd != -1)){
+		printf("\033[41;37mclose client_fd\033[0m\n");
 		close(client_fd);
 	}
 	exit(1);
