@@ -15,8 +15,8 @@ int readline(int client, char* buf, int size)	//CRLF, /n
 	int cnt = 0;
 	char temp = '\0';
 	int recv_size = 0;
-	while ((c != '\n') && (cnt < size-1)){
-		recv_size = recv(client, &c, 1, 0);
+	while ((temp != '\n') && (cnt < size-1)){
+		recv_size = recv(client, &temp, 1, 0);
 		if (recv_size > 0){
 			if (temp == '\r'){
 				recv_size = recv(client, &temp, 1, MSG_PEEK);	//保留
@@ -30,7 +30,7 @@ int readline(int client, char* buf, int size)	//CRLF, /n
 			cnt++;
 		}
 		else{
-			buf[cnt] = '\n';	
+			temp = '\n';	
 		}
 	}
 	buf[cnt] = '\0';
@@ -97,7 +97,6 @@ void make_response(int client, char* file_path)
 	char* temp = "Accept"; 
 	char buf[1024]; 
 	char type[64];
-	int len = 0; int ptr = 0;
 	
 	for(int i = 0; i<strlen(file_path); i++){
 		if(!strcmp(file_path+i, ".")){
@@ -149,7 +148,7 @@ void request_parse(int client)
 	if(file_path[strlen(file_path)-1] == '/'){
 		strcat(file_path, "index.html");
 	}
-	make_response(client);
+	make_response(client, file_path);
 	closet(client);
 	return;
 }
