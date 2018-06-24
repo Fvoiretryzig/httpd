@@ -15,7 +15,7 @@ int readline(int client, char* buf, int size);
 void deal_error();
 void deal_notfound(int client, char* type);
 void send_header(int client, char* type);
-void sent_content(int client, FILE* fp);
+void sendbody(int client, FILE* fp);
 void make_response(int client, char* file_path);
 void request_parse(int client);
 void signal_handler_stop(int signal_num);
@@ -123,7 +123,7 @@ void make_response(int client, char* file_path)
 	}
 	else{
 		send_header(client, type);
-		send_content(client, fp);
+		sendbody(client, fp);
 	}
 	fclose(fp);
 }
