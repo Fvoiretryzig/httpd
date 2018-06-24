@@ -21,7 +21,7 @@ void deal_notfound(int client, char* type);
 void send_header(int client, char* type);
 void send_body(int client, FILE* fp);
 void make_response(int client, char* file_path);
-void *request_parse(void* arg)
+void *request_parse(void* arg);
 void signal_handler_stop(int signal_num);
 
 int read_line(int client, char* buf, int size)	//CRLF, /n
