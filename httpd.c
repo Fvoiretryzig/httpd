@@ -331,9 +331,7 @@ int main(int argc, char *argv[])
     }
     printf("\033[42;37mhttpd running on port %d\033[0m\n", port);
     while(1){
-    	printf("xixix\n");
     	client_fd = accept(server_fd, (struct sockaddr *)&client_addr, &client_addr_len);
-    	printf("haha\n");
     	if(client_fd == -1){
     		printf("\033[41;37mclient create socket failed!!!!\033[0m\n");
     		exit(1);
