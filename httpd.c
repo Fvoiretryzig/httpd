@@ -179,36 +179,14 @@ void sighandler(int signum)
 		exit(0);	
 	}
 }
-char *my_strstr(char *dest,char *src)  
-{  
-    char *ptr=NULL;  
-    char *str1=dest;  
-    char *str2=src;  
-    assert(dest);  
-    assert(src); 
-    printf("int my strst:%s %s\n", dest, src); 
-    while(*str1 != '\0')  
-    {  
-        ptr=str1;  
-        while((*str1 != '\0') && (*str2 != '\0') && (*str1 == *str2))  
-        {  
-            str1++;  
-            str2++;  
-        }  
-        if(*str2 == '\0')  
-            return (char *)ptr;  
-        str1=ptr+1;  
-        str2=src;  
-    }  
-    return 0;  
-}
+
 void parse_path(char* path, char* new_path)
 {
 	int ptr = 0;
 	char* temp;
 	
 	strcpy(new_path, path);
-	temp = my_strstr(path, "/.");
+	temp = strstr(path, "./");
 	while(temp){
 		printf("in while\n");
 		ptr = path - temp;
@@ -217,9 +195,9 @@ void parse_path(char* path, char* new_path)
 			new_path[i] = path[i+2];		
 		}
 		strcpy(path, new_path);
-		temp = my_strstr(path, "/.");
+		temp = strstr(path, "./");
 	}
-	temp = my_strstr(path, "/..");
+	temp = strstr(path, "../");
 	while(temp){
 		int slant_pos = -1;
 		ptr = path - temp;
@@ -237,7 +215,7 @@ void parse_path(char* path, char* new_path)
 			new_path[i] = path[i+diff];
 		}
 		strcpy(path, new_path);
-		temp = my_strstr(path, "/..");
+		temp = strstr(path, "../");
 	}
 	printf("the new path is :%s\n", new_path);
 	return;
