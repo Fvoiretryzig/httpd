@@ -179,7 +179,7 @@ void sighandler(int signum)
 		exit(0);	
 	}
 }
-/*char *my_strstr(char *dest,char *src)  
+char *my_strstr(char *dest,char *src)  
 {  
     char *ptr=NULL;  
     char *str1=dest;  
@@ -205,7 +205,7 @@ void sighandler(int signum)
         str2=src;  
     }  
     return 0;  
-}*/
+}
 void parse_path(char* path, char* new_path)
 {
 	int ptr = 0;
@@ -239,7 +239,7 @@ void parse_path(char* path, char* new_path)
 		}
 	}
 	new_path[ptr] = '\0'; path[ptr] = '\0';	
-	temp = strstr(path, "./");
+	temp = my_strstr(path, "./");
 	printf("temp:0x%08x\n", temp);
 	while(temp){
 		ptr = temp - path;
