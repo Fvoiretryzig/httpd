@@ -179,7 +179,7 @@ void sighandler(int signum)
 		exit(0);	
 	}
 }
-char *my_strstr(char *dest,char *src)  
+/*char *my_strstr(char *dest,char *src)  
 {  
     char *ptr=NULL;  
     char *str1=dest;  
@@ -205,7 +205,7 @@ char *my_strstr(char *dest,char *src)
         str2=src;  
     }  
     return 0;  
-}
+}*/
 void parse_path(char* path, char* new_path)
 {
 	int ptr = 0;
@@ -213,7 +213,8 @@ void parse_path(char* path, char* new_path)
 	
 	strcpy(new_path, path);
 	
-	temp = my_strstr(path, "../");
+	temp = strstr(path, "../");
+	printf("temp addr:0x%08x\n", (uint32_t)temp);
 	while(temp){
 		int slant_pos = -1;
 		ptr = path - temp;
