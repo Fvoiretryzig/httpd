@@ -196,6 +196,7 @@ void parse_path(char* path, char* new_path)
 				slant_pos = i;	
 			}
 		}
+		printf("slant_pos:%d\n", slant_pos);
 		if(slant_pos == -1){
 			printf("\033[41;37mInvalid file path!!!!\033[0m\n");
 			deal_error();
