@@ -12,6 +12,8 @@
 #include<pthread.h>
 #include<errno.h>
 
+#define SERVER_STRING "Server: fortyhttpd/0.1.0\r\n"
+
 char dir_name[64];
 int server_fd = -1;
 int client_fd = -1;
@@ -86,7 +88,12 @@ void send_header(int client, char* type)
 	char buf[1024];
 	
 	strcpy(buf, "HTTP/1.0 200 OK\r\n");
-	printf("buf:%s\n", buf);
+	if(send(client, buf, strlen(buf), 0) == -1){
+			printf("\033[41;37msend error\033[0m\n");
+			deal_error();
+	}
+	Server: hoohackhttpd/0.1.0\r\n
+	strcpy(buf, SERVER_STRING);
 	if(send(client, buf, strlen(buf), 0) == -1){
 			printf("\033[41;37msend error\033[0m\n");
 			deal_error();
@@ -97,7 +104,6 @@ void send_header(int client, char* type)
 	else if(!strcmp(type, ".css")){
 		strcpy(buf, "Content-Type: text/css\r\n");
 	}
-	printf("buf:%s", buf);
 	if(send(client, buf, strlen(buf), 0) == -1){
 			printf("\033[41;37msend error\033[0m\n");
 			deal_error();
@@ -146,19 +152,8 @@ void make_response(int client, char* file_path)
 		printf("\033[41;37mCANNOT support this type!!!!\033[0m\n");
 		deal_error();
 	}
-	char* buf[1024];
-	    sprintf(buf, "HTTP/1.0 200 OK\r\n");
-        send(client_fd, buf, strlen(buf), 0);
-        strcpy(buf, SERVER_STRING);
-        send(client_fd, buf, strlen(buf), 0);
-        sprintf(buf, "Content-Type: text/html\r\n");
-        send(client_fd, buf, strlen(buf), 0);
-        strcpy(buf, "\r\n");
-        send(client_fd, buf, strlen(buf), 0);
-        sprintf(buf, "Hello World\r\n");
-        send(client_fd, buf, strlen(buf), 0);
-	//send_header(client, type);
-	//send_body(client, file_path);
+	send_header(client, type);
+	send_body(client, file_path);
 }
 void *request_parse(int client)
 {
