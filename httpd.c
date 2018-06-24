@@ -146,7 +146,7 @@ void make_response(int client, char* file_path)
 	FILE* fp = NULL;  
 	fp = fopen(file_path, "r");
 	if(fp == NULL){
-		not_found(client);
+		deal_notfound(client);
 	}
 	else{
 		send_header(client, type);
