@@ -185,7 +185,8 @@ char *my_strstr(char *dest,char *src)
     char *str1=dest;  
     char *str2=src;  
     assert(dest);  
-    assert(dest);  
+    assert(src); 
+    printf("int my strst:%s %s\n", dest, src); 
     while(*str1 != '\0')  
     {  
         ptr=str1;  
