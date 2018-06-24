@@ -6,8 +6,10 @@
 #include<sys/stat.h>
 #include<stdlib.h> 
 #include<signal.h>
-#include <ctype.h>
+#include<ctype.h>
 #include<netinet/in.h>
+#include<assert.h>
+#include<pthread.h>
 
 char dir_name[64];
 int server_fd = -1;
@@ -96,7 +98,6 @@ void send_header(int client, char* type)
 void sent_content(int client, FILE* fp)
 {
 	char buf[1024];
-	fgets(buf, sizeof(buf), fp);
  	while (fgets(buf, sizeof(buf), fp) != NULL)
  	{
   		send(client, buf, strlen(buf), 0);
@@ -159,7 +160,7 @@ void request_parse(int client)
 		strcat(file_path, "index.html");
 	}
 	make_response(client, file_path);
-	closet(client);
+	close(client);
 	return;
 }
 void signal_handler_stop(int signal_num)
@@ -229,7 +230,7 @@ int main(int argc, char *argv[])
     printf("\033[42;37mhttpd running on port %d\033[0m\n", port);
     
     while(1){
-    	client_fd = accept(server_addr, (struct sockaddr *)&client_addr, &client_addr_len);
+    	client_fd = accept(server_fd, (struct sockaddr *)&client_addr, &client_addr_len);
     	if(client_fd == -1){
     		printf("\033[41;37mclient create socket failed!!!!\033[0m\n");
     		exit(1);
