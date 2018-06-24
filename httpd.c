@@ -196,8 +196,10 @@ char *my_strstr(char *dest,char *src)
             str2++;  
         }  
         printf("in out while: str1:%sxixi str2:%shahah\n", str1, str2); 
-        if(*str2 == '\0')  
+        if(*str2 == '\0'){
+        	printf("in return if\n");
             return (char *)ptr;  
+           }
         str1=ptr+1;  
         str2=src;  
     }  
