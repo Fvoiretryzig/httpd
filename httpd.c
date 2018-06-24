@@ -185,13 +185,13 @@ char *my_strstr(char *dest,char *src)
     char *str1=dest;  
     char *str2=src;  
     assert(dest);  
-    assert(dest);
-    printf("dest:%s src:%s\n", dest, src);  
+    assert(dest);  
     while(*str1 != '\0')  
     {  
         ptr=str1;  
         while((*str1 != '\0') && (*str2 != '\0') && (*str1 == *str2))  
         {  
+        	printf("in while:str1:%s str2:%s\n", str1, str2);
             str1++;  
             str2++;  
         }  
