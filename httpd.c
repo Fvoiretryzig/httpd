@@ -239,7 +239,7 @@ int main(int argc, char *argv[])
     		exit(1);
     	}
     	/*============创建另一个线程处理报文信息============*/
-    	if(pthread_create(&t1, NULL, request_parse, &client_fd) != 0){
+    	if(pthread_create(&t1, NULL, *request_parse, &client_fd) != 0){
     		printf("\033[41;37mthread creating failed!!!!\033[0m\n");
     		exit(1);
     	}
