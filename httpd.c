@@ -303,6 +303,7 @@ int main(int argc, char *argv[])
 		printf("\033[46;37mplease enter cmd like this:\033[0m\n");
 		printf("\033[46;37m\"./httpd -p PORT ./site\" or \"./httpd --port PORT ./size\"\033[0m\n");
 		printf("\033[46;37mthe PORT is a number which can be served as a port\033[0m\n");
+		exit(0);
 	}
 	else{
 		printf("\033[41;37mINVALID cmd!!!!\033[0m\n");
