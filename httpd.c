@@ -289,6 +289,10 @@ int main(int argc, char *argv[])
 	    printf("argv[%d] = %s\n", i, argv[i]);
 	}	
 	assert(!argv[argc]); // specification	
+	if(argc < 1){
+		printf("\033[41;37mINVALID cmd!!!! Enter ./httpd -h to look for help!\033[0m\n");
+		exit(1);
+	}
 	if(!strcmp(argv[1], "-p") || !strcmp(argv[1], "--port")){
 		if(argc < 4){
 			printf("\033[41;37mINVALID cmd!!!!\033[0m\n");
