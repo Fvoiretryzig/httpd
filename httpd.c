@@ -289,8 +289,7 @@ int main(int argc, char *argv[])
 	    printf("argv[%d] = %s\n", i, argv[i]);
 	}	
 	assert(!argv[argc]); // specification	
-	printf("argc:%d\n", argc);
-	if(argc < 1){
+	if(argc < 2){
 		printf("\033[41;37mINVALID cmd!!!! Enter ./httpd -h to look for help!\033[0m\n");
 		exit(1);
 	}
