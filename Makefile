@@ -9,7 +9,8 @@ include Makefile.git
 
 build: $(LAB).c
 	$(call git_commit, "compile")
-	gcc -std=gnu99 -O1 -Wall -o $(LAB) $(LAB).c
+	gcc httpd.c -g -w -lpthread -o httpd
+
 
 submit:
 	cd .. && tar cj $(LAB) > submission.tar.bz2

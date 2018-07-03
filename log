@@ -1,0 +1,12 @@
+argv[0] = ./httpd
+argv[1] = -p
+argv[2] = 8080
+argv[3] = ./site/haha/../
+[42;37mthe port is 8080[0m
+ptr:12
+path:./site/haha/
+ptr:0
+in parse_path ptr:0
+the new path is :site/haha/
+[42;37mthe directory name is: site/haha/[0m
+[42;37mhttpd running on port 8080[0m

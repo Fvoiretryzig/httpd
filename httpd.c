@@ -132,7 +132,7 @@ void make_response(int client, char* file_path)
 	}
 	ptr = strstr(file_path, ".ico");
 	if(ptr){
-		printf("haha\n");
+		printf("\033[41;37mcannot support .ico!!!\033[0m\n");
 		deal_error();
 	}
 	if(!strcmp(type, "nothing")){
