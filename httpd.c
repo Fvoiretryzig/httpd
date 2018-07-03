@@ -190,6 +190,7 @@ void *request_parse(int client)
 		sprintf(file_path, "%sindex.html", file_path);
 	}
 	make_response(client, file_path);
+	    printf("haha\n");
 	close(client);
 }
 void sighandler(int);
@@ -344,7 +345,7 @@ int main(int argc, char *argv[])
     		exit(1);
     	}
     }
-    printf("haha\n");
+
     close(server_fd);
 	return 0;
 }
