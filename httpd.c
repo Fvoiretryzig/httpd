@@ -97,6 +97,7 @@ void send_header(int client, char* type)
 	}
 	else if(!strcmp(type, ".ico")){
 		strcpy(buf, "Content-Type: image/x-icon\r\n");
+		printf("hha\n");
 	}
 	if(send(client, buf, strlen(buf), 0) == -1){
 			printf("\033[41;37msend error\033[0m\n");
