@@ -164,6 +164,7 @@ void *request_parse(int client)
 	printf("in request_parse: client:%d\n", client);
 	line_len = read_line(client, buf, sizeof(buf));
 	printf("buf:%s\n", buf);
+		    printf("haha\n");
 	while(!isspace(buf[ptr1]) && (ptr1<line_len-1)){
 		method[ptr2++] = buf[ptr1++];
 	}
@@ -190,7 +191,6 @@ void *request_parse(int client)
 		sprintf(file_path, "%sindex.html", file_path);
 	}
 	make_response(client, file_path);
-	    printf("haha\n");
 	close(client);
 }
 void sighandler(int);
