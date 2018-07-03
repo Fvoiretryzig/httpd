@@ -130,6 +130,11 @@ void make_response(int client, char* file_path)
 	if(ptr){
 		strcpy(type, ".css");
 	}
+	ptr = strstr(file_path, ".ico");
+	if(ptr){
+		printf("haha\n");
+		deal_error();
+	}
 	if(!strcmp(type, "nothing")){
 		printf("\033[41;37mCANNOT support this type!!!!\033[0m\n");
 		deal_error();
