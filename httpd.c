@@ -95,6 +95,9 @@ void send_header(int client, char* type)
 	else if(!strcmp(type, ".css")){
 		strcpy(buf, "Content-Type: text/css\r\n");
 	}
+	else if(!strcmp(type, ".ico")){
+		strcpy(buf, "Content-Type: image/x-icon\r\n");
+	}
 	if(send(client, buf, strlen(buf), 0) == -1){
 			printf("\033[41;37msend error\033[0m\n");
 			deal_error();
@@ -122,6 +125,7 @@ void send_body(int client, FILE* fp)
 void make_response(int client, char* file_path)
 {
 	char type[64]; char* ptr = NULL;
+	strcpy(type, "nothing");
 	ptr = strstr(file_path, ".html");
 	if(ptr){
 		strcpy(type, ".html");
@@ -129,6 +133,10 @@ void make_response(int client, char* file_path)
 	ptr = strstr(file_path, ".css");
 	if(ptr){
 		strcpy(type, ".css");
+	}
+	ptr = strstr(file_path, ".ico");
+	if(ptr){
+		strcpy(type, ".ico");
 	}
 	if(!strcmp(type, "nothing")){
 		printf("\033[41;37mCANNOT support this type!!!!\033[0m\n");
@@ -189,7 +197,6 @@ void *request_parse(int client)
 		//strcat(file_path, "index.html");
 		sprintf(file_path, "%sindex.html", file_path);
 	}
-		    printf("haha\n");
 	make_response(client, file_path);
 	close(client);
 }
