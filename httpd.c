@@ -290,6 +290,10 @@ int main(int argc, char *argv[])
 	}	
 	assert(!argv[argc]); // specification	
 	if(!strcmp(argv[1], "-p") || !strcmp(argv[1], "--port")){
+		if(argc < 4){
+			printf("\033[41;37mINVALID cmd!!!!\033[0m\n");
+			exit(1);
+		}
 		char port_c[8];
 		strcpy(port_c, argv[2]);
 		port = (u_short)atoi(port_c);
